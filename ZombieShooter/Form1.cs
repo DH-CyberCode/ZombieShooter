@@ -50,7 +50,7 @@ namespace ZombieShooter
             counter++;
             if(counter == rando && grenadeAvailable == false)
             {
-               // DropGrenade();
+               DropGrenade();
             }
 
             
