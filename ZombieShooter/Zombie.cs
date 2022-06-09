@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace ZombieShooter
 {
-    class Zombie
+    public class Zombie
     {
         public string Facing { get; set; }
+        public bool Stopped { get; set; }
+        
+
 
 
     }

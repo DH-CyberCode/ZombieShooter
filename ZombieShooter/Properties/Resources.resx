@@ -178,6 +178,12 @@
   <data name="zleft_punch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zleft-punch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="zLowerLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zLowerLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zLowerRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zLowerRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="zright" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zright.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -186,6 +192,12 @@
   </data>
   <data name="zup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zUpperLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zUpperLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zUpperRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zUpperRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="zup_punch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zup-punch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -263,6 +263,26 @@ namespace ZombieShooter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap zLowerLeft {
+            get {
+                object obj = ResourceManager.GetObject("zLowerLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap zLowerRight {
+            get {
+                object obj = ResourceManager.GetObject("zLowerRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap zright {
             get {
                 object obj = ResourceManager.GetObject("zright", resourceCulture);
@@ -296,6 +316,26 @@ namespace ZombieShooter.Properties {
         internal static System.Drawing.Bitmap zup_punch {
             get {
                 object obj = ResourceManager.GetObject("zup_punch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap zUpperLeft {
+            get {
+                object obj = ResourceManager.GetObject("zUpperLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap zUpperRight {
+            get {
+                object obj = ResourceManager.GetObject("zUpperRight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
