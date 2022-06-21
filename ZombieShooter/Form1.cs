@@ -13,7 +13,7 @@ namespace ZombieShooter
     public partial class GameWindow : Form
     {
 
-        bool goLeft, goRight, goUp, goDown, gameOver;
+        bool goLeft, goRight, goUp, goDown, gamePaused, gameOver;
         bool grenadeAvailable = false;
         string facing = "up";
         int playerHealth = 100;
@@ -46,11 +46,13 @@ namespace ZombieShooter
             txtScore.Text = "Score: " + score;
 
             //---- RANDOM GRENADE DROPS
-            int rando = randNum.Next(counter, counter+100);
+            int rando = randNum.Next(counter, counter+200);
             counter++;
             if(counter == rando && grenadeAvailable == false)
             {
-               DropGrenade();
+                grenadeAvailable = true;
+                DropGrenade();
+
             }
 
             
@@ -64,7 +66,7 @@ namespace ZombieShooter
             }
             else
             {
-
+                GameOverBanner.BringToFront();
                 GameOverBanner.Visible = true;
 
                 gameOver = true;
@@ -120,45 +122,47 @@ namespace ZombieShooter
                 //==========================================================]
                 //=========     GRENADE PICKUP    ==========================]
                 //==========================================================]
-                //if (item is PictureBox && (string)item.Tag == "grenadeDrop")
-                //{
-                //    if (player.Bounds.IntersectsWith(item.Bounds))
-                //    {
-                        
-                //        this.Controls.Remove(item);
-                //        item.Dispose();
-                //        foreach (PictureBox z in zombieList)
-                //        {
-                //            z.BackgroundImage = Properties.Resources.Explosion;
-                //            z.BackgroundImageLayout = ImageLayout.Center;
-                            
+                if (item is PictureBox && (string)item.Tag == "grenadeDrop")
+                {
+                    if (player.Bounds.IntersectsWith(item.Bounds))
+                    {
 
-                //        }
-                //        GameTimer.Stop();
-                //        foreach (PictureBox z in zombieList)
-                //        {
+                        this.Controls.Remove(item);
+                        item.Dispose();
+                        zombieSpeed = 0;
+                        foreach (PictureBox z in zombieList)
+                        {
+                            z.BackgroundImage = Properties.Resources.Explosion;
+                            z.BackgroundImageLayout = ImageLayout.Center;
 
-                //            this.Controls.Remove((PictureBox)z);
-                //            ((PictureBox)z).Dispose();
-                            
-                            
-                //        }
-                //        zombieList.Clear();
-                //        for(int i =0; i<=3; i++)
-                //        {
-                //            MakeZobie();
-                //        }
-                        
-                //        GameTimer.Start();
 
-                //    }
+                        }
+                        grenadeAvailable = false;
+                        //        GameTimer.Stop();
+                        //        foreach (PictureBox z in zombieList)
+                        //        {
 
-                //}
+                        //            this.Controls.Remove((PictureBox)z);
+                        //            ((PictureBox)z).Dispose();
 
-                //==========================================================]
-                //=========     ZOMBIE CHASE    ============================]
-                //==========================================================]
-                if (item is PictureBox && (string)item.Tag == "zombie")
+
+                        //        }
+                        //        zombieList.Clear();
+                        //        for(int i =0; i<=3; i++)
+                        //        {
+                        //            MakeZobie();
+                        //        }
+
+                        //        GameTimer.Start();
+
+                    }
+
+                }
+
+                    //==========================================================]
+                    //=========     ZOMBIE CHASE    ============================]
+                    //==========================================================]
+                    if (item is PictureBox && (string)item.Tag == "zombie")
                 {
 
                     if (player.Bounds.IntersectsWith(item.Bounds))
@@ -298,11 +302,32 @@ namespace ZombieShooter
                     player.Image = Properties.Resources.down;
 
                 }
+                //PAUSE GAME
+                if(e.KeyCode == Keys.Escape)
+                {
+                    if (gamePaused)
+                    {
+                        //RESUME
+                        gamePaused = false;
+                        GameTimer.Start();
+                    }
+                    else
+                    {
+                        //PAUSE
+                        gamePaused = true;
+                        GameTimer.Stop();
+                    }
+                    
+                }
 
 
             }
             else
             {
+
+                
+
+                //RESTART GAME
                 if (e.KeyCode == Keys.Return)
                 {
                     gameOver = false;
@@ -390,19 +415,23 @@ namespace ZombieShooter
             shootBullet.bulletLeft = player.Left + (player.Width / 2);
             shootBullet.bulletTop = player.Top + (player.Height / 2);
             shootBullet.MakeBullet(this);
+            
         }
 
         private void MakeZobie()
         {
-
-            PictureBox zombie = new PictureBox();
-            zombie.Tag = "zombie";
-            zombie.Image = Properties.Resources.zdown;
-            zombie.Left = randNum.Next(0, 900);
-            zombie.Top = randNum.Next(0, 800);
-            zombie.SizeMode = PictureBoxSizeMode.AutoSize;
+            int posLeft = randNum.Next(0, 900);
+            int posTop = randNum.Next(0, 800);
+            Zombie zombie = new Zombie(posLeft,posTop);
+            //PictureBox zombie = new PictureBox();
+            //zombie.Tag = "zombie";
+            //zombie.Image = Properties.Resources.zdown;
+            //zombie.Left = randNum.Next(0, 900);
+            //zombie.Top = randNum.Next(0, 800);
+            //zombie.SizeMode = PictureBoxSizeMode.AutoSize;
             zombieList.Add(zombie);
             this.Controls.Add(zombie);
+            zombie.BringToFront();
             player.BringToFront();
         }
 
@@ -414,6 +443,7 @@ namespace ZombieShooter
             ammoDrop.Left = randNum.Next(10, this.ClientSize.Width - ammoDrop.Width);
             ammoDrop.Top = randNum.Next(40, ClientSize.Height - ammoDrop.Height);
             ammoDrop.Tag = "ammoDrop";
+            ammoList.Add(ammoDrop);
             this.Controls.Add(ammoDrop);
 
             ammoDrop.BringToFront();
@@ -437,12 +467,25 @@ namespace ZombieShooter
         private void RestartGame()
         {
 
-            player.Image = Properties.Resources.up;
-            GameOverBanner.Visible = false;
+            foreach(PictureBox pbox in ammoList)
+            {
+                this.Controls.Remove(pbox);
+                pbox.Dispose();
+            }
 
             foreach (PictureBox picbox in zombieList)
             {
                 this.Controls.Remove(picbox);
+                picbox.Dispose();
+            }
+
+            foreach (Control picBox in Controls)
+            {
+                if((string)picBox.Tag == "grenadeDrop")
+                {
+                    this.Controls.Remove(picBox);
+                    picBox.Dispose();
+                }
             }
 
             zombieList.Clear();
@@ -452,6 +495,9 @@ namespace ZombieShooter
                 MakeZobie();
             }
 
+            player.Image = Properties.Resources.up;
+            facing = "up";
+            GameOverBanner.Visible = false;
             goDown = false;
             goUp = false;
             goLeft = false;
