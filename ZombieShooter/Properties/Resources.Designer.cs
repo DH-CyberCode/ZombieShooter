@@ -161,6 +161,24 @@ namespace ZombieShooter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Grenade_Explosion {
+            get {
+                return ResourceManager.GetStream("Grenade_Explosion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream GUN_FIRE_low {
+            get {
+                return ResourceManager.GetStream("GUN_FIRE_low", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap left {
@@ -191,6 +209,15 @@ namespace ZombieShooter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Reload {
+            get {
+                return ResourceManager.GetStream("Reload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap right {
@@ -216,6 +243,16 @@ namespace ZombieShooter.Properties {
         internal static System.Drawing.Bitmap up {
             get {
                 object obj = ResourceManager.GetObject("up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap z_exploded {
+            get {
+                object obj = ResourceManager.GetObject("z-exploded", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

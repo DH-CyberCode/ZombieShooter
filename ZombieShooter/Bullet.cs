@@ -59,9 +59,9 @@ namespace ZombieShooter
             {
                 bullet.Top += speed;
             }
+            
 
-
-            if (bullet.Left < 10 || bullet.Left > 900 || bullet.Top < 10 || bullet.Top > 680)
+            if (bullet.Left < 10 || bullet.Left > GameWindow.ActiveForm.Bounds.Width-10 || bullet.Top < 10 || bullet.Top > GameWindow.ActiveForm.Bounds.Height-15)
             {
                 bulletTimer.Stop();
                 bulletTimer.Dispose();
