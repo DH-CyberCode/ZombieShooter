@@ -240,6 +240,16 @@ namespace ZombieShooter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap title_card {
+            get {
+                object obj = ResourceManager.GetObject("title_card", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap up {
             get {
                 object obj = ResourceManager.GetObject("up", resourceCulture);
@@ -334,6 +344,15 @@ namespace ZombieShooter.Properties {
             get {
                 object obj = ResourceManager.GetObject("zright_punch", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream ZS_soundtrack {
+            get {
+                return ResourceManager.GetStream("ZS_soundtrack", resourceCulture);
             }
         }
         

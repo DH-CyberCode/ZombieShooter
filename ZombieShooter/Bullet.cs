@@ -61,7 +61,7 @@ namespace ZombieShooter
             }
             
 
-            if (bullet.Left < 10 || bullet.Left > GameWindow.ActiveForm.Bounds.Width-10 || bullet.Top < 10 || bullet.Top > GameWindow.ActiveForm.Bounds.Height-15)
+            if (bullet.Left < 10 || bullet.Left > Game.ActiveForm.Bounds.Width-10 || bullet.Top < 10 || bullet.Top > Game.ActiveForm.Bounds.Height-15)
             {
                 bulletTimer.Stop();
                 bulletTimer.Dispose();

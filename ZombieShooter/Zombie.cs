@@ -54,7 +54,7 @@ namespace ZombieShooter
                 zTimer.Dispose();
                 this.Dispose();
                 zTimer = null;
-                GameWindow.ActiveForm.Controls.Remove(this);
+                Game.ActiveForm.Controls.Remove(this);
                 
                 
             }
