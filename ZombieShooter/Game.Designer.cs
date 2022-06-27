@@ -34,18 +34,19 @@
             this.helthBarLabel = new System.Windows.Forms.Label();
             this.healthBar = new System.Windows.Forms.ProgressBar();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
-            this.GameOverBanner = new System.Windows.Forms.PictureBox();
-            this.player = new System.Windows.Forms.PictureBox();
-            this.titleGroup = new System.Windows.Forms.GroupBox();
-            this.titlePic = new System.Windows.Forms.PictureBox();
+            this.titleGroup = new System.Windows.Forms.Panel();
+            this.titleTextLabel = new System.Windows.Forms.Label();
             this.pressEnterLabel = new System.Windows.Forms.Label();
             this.arrowsToMove = new System.Windows.Forms.Label();
             this.spaceToShoot = new System.Windows.Forms.Label();
-            this.titleText = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.GameOverBanner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
+            this.titlePic = new System.Windows.Forms.PictureBox();
+            this.restartLabel = new System.Windows.Forms.Label();
+            this.GameOverBanner = new System.Windows.Forms.PictureBox();
+            this.player = new System.Windows.Forms.PictureBox();
             this.titleGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.titlePic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GameOverBanner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
             // txtAmmo
@@ -99,12 +100,99 @@
             this.GameTimer.Interval = 20;
             this.GameTimer.Tick += new System.EventHandler(this.MainTimerEvent);
             // 
+            // titleGroup
+            // 
+            this.titleGroup.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.titleGroup.AutoSize = true;
+            this.titleGroup.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.titleGroup.Controls.Add(this.titleTextLabel);
+            this.titleGroup.Controls.Add(this.pressEnterLabel);
+            this.titleGroup.Controls.Add(this.arrowsToMove);
+            this.titleGroup.Controls.Add(this.spaceToShoot);
+            this.titleGroup.Controls.Add(this.titlePic);
+            this.titleGroup.Location = new System.Drawing.Point(90, 41);
+            this.titleGroup.Name = "titleGroup";
+            this.titleGroup.Size = new System.Drawing.Size(1294, 741);
+            this.titleGroup.TabIndex = 20;
+            // 
+            // titleTextLabel
+            // 
+            this.titleTextLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.titleTextLabel.AutoSize = true;
+            this.titleTextLabel.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titleTextLabel.ForeColor = System.Drawing.Color.Maroon;
+            this.titleTextLabel.Location = new System.Drawing.Point(309, 33);
+            this.titleTextLabel.Name = "titleTextLabel";
+            this.titleTextLabel.Size = new System.Drawing.Size(695, 45);
+            this.titleTextLabel.TabIndex = 23;
+            this.titleTextLabel.Text = "WELCOME TO THE ZOMBIE APOCALYPSE";
+            // 
+            // pressEnterLabel
+            // 
+            this.pressEnterLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pressEnterLabel.AutoSize = true;
+            this.pressEnterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pressEnterLabel.ForeColor = System.Drawing.Color.Maroon;
+            this.pressEnterLabel.Location = new System.Drawing.Point(533, 708);
+            this.pressEnterLabel.Name = "pressEnterLabel";
+            this.pressEnterLabel.Size = new System.Drawing.Size(222, 29);
+            this.pressEnterLabel.TabIndex = 22;
+            this.pressEnterLabel.Text = "ENTER to START";
+            // 
+            // arrowsToMove
+            // 
+            this.arrowsToMove.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.arrowsToMove.AutoSize = true;
+            this.arrowsToMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.arrowsToMove.ForeColor = System.Drawing.Color.Maroon;
+            this.arrowsToMove.Location = new System.Drawing.Point(512, 679);
+            this.arrowsToMove.Name = "arrowsToMove";
+            this.arrowsToMove.Size = new System.Drawing.Size(267, 29);
+            this.arrowsToMove.TabIndex = 21;
+            this.arrowsToMove.Text = "ARROW keys to move";
+            // 
+            // spaceToShoot
+            // 
+            this.spaceToShoot.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.spaceToShoot.AutoSize = true;
+            this.spaceToShoot.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.spaceToShoot.ForeColor = System.Drawing.Color.Maroon;
+            this.spaceToShoot.Location = new System.Drawing.Point(507, 650);
+            this.spaceToShoot.Name = "spaceToShoot";
+            this.spaceToShoot.Size = new System.Drawing.Size(272, 29);
+            this.spaceToShoot.TabIndex = 20;
+            this.spaceToShoot.Text = "Press SPACE to shoot";
+            // 
+            // titlePic
+            // 
+            this.titlePic.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.titlePic.Image = global::ZombieShooter.Properties.Resources.title_card;
+            this.titlePic.Location = new System.Drawing.Point(146, 85);
+            this.titlePic.Name = "titlePic";
+            this.titlePic.Size = new System.Drawing.Size(1000, 562);
+            this.titlePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.titlePic.TabIndex = 17;
+            this.titlePic.TabStop = false;
+            // 
+            // restartLabel
+            // 
+            this.restartLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.restartLabel.AutoSize = true;
+            this.restartLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.restartLabel.ForeColor = System.Drawing.Color.Maroon;
+            this.restartLabel.Location = new System.Drawing.Point(601, 772);
+            this.restartLabel.Name = "restartLabel";
+            this.restartLabel.Size = new System.Drawing.Size(264, 25);
+            this.restartLabel.TabIndex = 24;
+            this.restartLabel.Text = "Press ENTER to restart!";
+            this.restartLabel.Visible = false;
+            // 
             // GameOverBanner
             // 
             this.GameOverBanner.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.GameOverBanner.BackColor = System.Drawing.Color.Transparent;
             this.GameOverBanner.Image = global::ZombieShooter.Properties.Resources.GameOver;
-            this.GameOverBanner.Location = new System.Drawing.Point(564, 198);
+            this.GameOverBanner.Location = new System.Drawing.Point(559, 201);
             this.GameOverBanner.Name = "GameOverBanner";
             this.GameOverBanner.Size = new System.Drawing.Size(356, 245);
             this.GameOverBanner.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -124,89 +212,13 @@
             this.player.TabIndex = 4;
             this.player.TabStop = false;
             // 
-            // titleGroup
-            // 
-            this.titleGroup.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.titleGroup.AutoSize = true;
-            this.titleGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.titleGroup.Controls.Add(this.titleText);
-            this.titleGroup.Controls.Add(this.pressEnterLabel);
-            this.titleGroup.Controls.Add(this.arrowsToMove);
-            this.titleGroup.Controls.Add(this.spaceToShoot);
-            this.titleGroup.Controls.Add(this.titlePic);
-            this.titleGroup.Location = new System.Drawing.Point(12, 39);
-            this.titleGroup.Name = "titleGroup";
-            this.titleGroup.Size = new System.Drawing.Size(1460, 884);
-            this.titleGroup.TabIndex = 11;
-            this.titleGroup.TabStop = false;
-            // 
-            // titlePic
-            // 
-            this.titlePic.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.titlePic.Image = global::ZombieShooter.Properties.Resources.title_card;
-            this.titlePic.Location = new System.Drawing.Point(230, 71);
-            this.titlePic.Name = "titlePic";
-            this.titlePic.Size = new System.Drawing.Size(1000, 562);
-            this.titlePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.titlePic.TabIndex = 7;
-            this.titlePic.TabStop = false;
-            // 
-            // pressEnterLabel
-            // 
-            this.pressEnterLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pressEnterLabel.AutoSize = true;
-            this.pressEnterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pressEnterLabel.ForeColor = System.Drawing.Color.Maroon;
-            this.pressEnterLabel.Location = new System.Drawing.Point(619, 709);
-            this.pressEnterLabel.Name = "pressEnterLabel";
-            this.pressEnterLabel.Size = new System.Drawing.Size(222, 29);
-            this.pressEnterLabel.TabIndex = 13;
-            this.pressEnterLabel.Text = "ENTER to START";
-            // 
-            // arrowsToMove
-            // 
-            this.arrowsToMove.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.arrowsToMove.AutoSize = true;
-            this.arrowsToMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.arrowsToMove.ForeColor = System.Drawing.Color.Maroon;
-            this.arrowsToMove.Location = new System.Drawing.Point(597, 670);
-            this.arrowsToMove.Name = "arrowsToMove";
-            this.arrowsToMove.Size = new System.Drawing.Size(267, 29);
-            this.arrowsToMove.TabIndex = 12;
-            this.arrowsToMove.Text = "ARROW keys to move";
-            // 
-            // spaceToShoot
-            // 
-            this.spaceToShoot.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.spaceToShoot.AutoSize = true;
-            this.spaceToShoot.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.spaceToShoot.ForeColor = System.Drawing.Color.Maroon;
-            this.spaceToShoot.Location = new System.Drawing.Point(594, 636);
-            this.spaceToShoot.Name = "spaceToShoot";
-            this.spaceToShoot.Size = new System.Drawing.Size(272, 29);
-            this.spaceToShoot.TabIndex = 11;
-            this.spaceToShoot.Text = "Press SPACE to shoot";
-            // 
-            // titleText
-            // 
-            this.titleText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.titleText.AutoSize = true;
-            this.titleText.BackColor = System.Drawing.Color.Transparent;
-            this.titleText.Font = new System.Drawing.Font("Comic Sans MS", 36F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titleText.ForeColor = System.Drawing.Color.DarkRed;
-            this.titleText.Location = new System.Drawing.Point(207, 0);
-            this.titleText.Name = "titleText";
-            this.titleText.Size = new System.Drawing.Size(0, 68);
-            this.titleText.TabIndex = 14;
-            this.titleText.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.titleText.UseMnemonic = false;
-            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1474, 824);
+            this.Controls.Add(this.restartLabel);
             this.Controls.Add(this.titleGroup);
             this.Controls.Add(this.GameOverBanner);
             this.Controls.Add(this.player);
@@ -219,11 +231,11 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
-            ((System.ComponentModel.ISupportInitialize)(this.GameOverBanner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
             this.titleGroup.ResumeLayout(false);
             this.titleGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.titlePic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GameOverBanner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,12 +250,13 @@
         private System.Windows.Forms.PictureBox player;
         private System.Windows.Forms.Timer GameTimer;
         private System.Windows.Forms.PictureBox GameOverBanner;
-        private System.Windows.Forms.GroupBox titleGroup;
-        private System.Windows.Forms.Label titleText;
+        private System.Windows.Forms.Panel titleGroup;
         private System.Windows.Forms.Label pressEnterLabel;
         private System.Windows.Forms.Label arrowsToMove;
         private System.Windows.Forms.Label spaceToShoot;
         private System.Windows.Forms.PictureBox titlePic;
+        private System.Windows.Forms.Label restartLabel;
+        private System.Windows.Forms.Label titleTextLabel;
     }
 }
 

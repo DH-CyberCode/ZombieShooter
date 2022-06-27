@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Media;
 
+
 namespace ZombieShooter
 {
     public partial class Game : Form
     {
-
+                
         int game_height = Screen.PrimaryScreen.Bounds.Height;
         int game_width = Screen.PrimaryScreen.Bounds.Width;
         bool goLeft, goRight, goUp, goDown, gamePaused, gameOver;
@@ -36,8 +36,9 @@ namespace ZombieShooter
         SoundPlayer reload_sound = new SoundPlayer(Properties.Resources.Reload);
         SoundPlayer explode_sound = new SoundPlayer(Properties.Resources.Grenade_Explosion);
         SoundPlayer sound_track = new SoundPlayer(Properties.Resources.ZS_soundtrack);
-        
-        
+        //AxWMPLib.AxWindowsMediaPlayer winMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
+
+
         public object Propeties { get; private set; }
 
         public Game()
@@ -47,26 +48,18 @@ namespace ZombieShooter
             GameOverBanner.Visible = false;
             titleGroup.BringToFront();
             sound_track.PlayLooping();
-            //gamePaused = false;
-            RestartGame();
+         
+            
+            //backgroundTrack.Hide();
+
+            gamePaused = true;
+           // RestartGame();
         }
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
 
-            //--TITLE SCROLL
             
-            if(strCount == strToScroll.Length)
-            {
-                titleText.Text = " ";
-                strCount = 0;
-            }
-            else
-            {
-                titleText.Text += strToScroll[strCount].ToString().ToUpper();
-                    strCount++;
-            }
-
             //==========================================================]
             //=========     GAME OVER   ================================]
             //==========================================================]
@@ -79,7 +72,8 @@ namespace ZombieShooter
             {
                 GameOverBanner.BringToFront();
                 GameOverBanner.Visible = true;
-
+                
+                sound_track.PlayLooping();
                 gameOver = true;
                 player.Image = Properties.Resources.dead;
                 GameTimer.Stop();
@@ -351,8 +345,8 @@ namespace ZombieShooter
 
 
             }
-            else
-            {
+          //  else
+          //  {
 
                 
 
@@ -360,9 +354,14 @@ namespace ZombieShooter
                 if (e.KeyCode == Keys.Return)
                 {
                     gameOver = false;
+                    gamePaused = false;
+                    
+                    
+                        titleGroup.Visible = false;
+                    
                     RestartGame();
                 }
-            }
+          //  }
 
         }//END OF KeyIsDown
 
@@ -408,23 +407,28 @@ namespace ZombieShooter
 
             }
 
-            if (gameOver == false)
+            if (gameOver == false )
             {
 
-
-                if (e.KeyCode == Keys.Space && ammo > 0)
+                if(gamePaused == false)
                 {
-                    gun_fire.Play();
-                    ammo--;
-                    ShootBullet(facing);
-
-                    if (ammo == 5 || ammo == 1)
+                    if (e.KeyCode == Keys.Space && ammo > 0)
                     {
-                        DropAmmo();
-                    }
+                        gun_fire.Play();
+                        ammo--;
+                        ShootBullet(facing);
 
+
+                        if (ammo == 5 || ammo == 1)
+                        {
+                            DropAmmo();
+                        }
+
+                    }
+                   
                 }
             }
+              
 
 
         }//END OF KeyisUp
@@ -495,7 +499,7 @@ namespace ZombieShooter
         private void RestartGame()
         {
 
-            titleGroup.Visible = false;
+            titleGroup.Hide();
 
             //--REMOVE ALL GAME ASSETS
             foreach (PictureBox pbox in ammoList)
@@ -516,6 +520,15 @@ namespace ZombieShooter
                 {
                     this.Controls.Remove(picBox);
                     picBox.Dispose();
+                }
+            }
+
+            foreach (Control label in Controls)
+            {
+                if ((string)label.Name == "restartWithEnterLabel")
+                {
+                    this.Controls.Remove(label);
+                    label.Dispose();
                 }
             }
 
@@ -543,7 +556,7 @@ namespace ZombieShooter
             goUp = false;
             goLeft = false;
             goRight = false;
-
+            sound_track.Stop();
             playerHealth = 100;
             score = 0;
             ammo = 25;
@@ -552,6 +565,6 @@ namespace ZombieShooter
             GameTimer.Start();
         }
 
-
+       
     }
 }

@@ -128,6 +128,7 @@
     <None Include="Resources\right.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\RubikWetPaint-Regular.ttf" />
     <None Include="Resources\up.png" />
   </ItemGroup>
   <ItemGroup>
@@ -173,19 +174,38 @@
     <None Include="Resources\z-exploded.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GUN_FIRE_low.wav" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Reload.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\GrenadeExplosion.wav" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ZS_soundtrack.wav" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\title_card.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GUN_FIRE_low.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Grenade_Explosion.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
