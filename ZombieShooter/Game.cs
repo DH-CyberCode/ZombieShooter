@@ -545,7 +545,11 @@ namespace ZombieShooter
             {
                 player.Image = Properties.Resources.up;
             }
-            bite_sound.Play();
+            
+            if (!muted)
+            {
+                bite_sound.Play();
+            }
             biteTimer.Stop();
         }
 
