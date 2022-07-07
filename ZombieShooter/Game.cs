@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,30 +14,34 @@ namespace ZombieShooter
 {
     public partial class Game : Form
     {
-                
-        int game_height = Screen.PrimaryScreen.Bounds.Height;
-        int game_width = Screen.PrimaryScreen.Bounds.Width;
+
         bool goLeft, goRight, goUp, goDown, gamePaused, gameOver;
         bool grenadeAvailable = false;
+        bool firstAidAvailable = false;
+        bool muted = false;
         string facing = "up";
-        string strToScroll = "Welcome To The Zombie Apocalypse";
         int playerHealth = 100;
         int speed = 10;
         int ammo = 20;
-        int zombieSpeed = 3;
         int score = 0;
         Random randNum = new Random();
         int counter = 100;
-        int strCount = 0;
+        int tickCount = 0;
         List<Zombie> zombieList = new List<Zombie>();
         List<PictureBox> ammoList = new List<PictureBox>();
         List<PictureBox> firstAidList = new List<PictureBox>();
         List<PictureBox> gernadeList = new List<PictureBox>();
+
         SoundPlayer gun_fire = new SoundPlayer(Properties.Resources.GUN_FIRE_low);
         SoundPlayer reload_sound = new SoundPlayer(Properties.Resources.Reload);
         SoundPlayer explode_sound = new SoundPlayer(Properties.Resources.Grenade_Explosion);
         SoundPlayer sound_track = new SoundPlayer(Properties.Resources.ZS_soundtrack);
-        //AxWMPLib.AxWindowsMediaPlayer winMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
+        SoundPlayer dry_Fire = new SoundPlayer(Properties.Resources.OutOfAmmo);
+        SoundPlayer bite_sound = new SoundPlayer(Properties.Resources.Pain);
+        SoundPlayer cheer_sound = new SoundPlayer(Properties.Resources.yay);
+
+        Label pauseLabel = new Label();
+        
 
 
         public object Propeties { get; private set; }
@@ -44,14 +49,21 @@ namespace ZombieShooter
         public Game()
         {
             InitializeComponent();
-            strCount = strToScroll.Length - 1;
             GameOverBanner.Visible = false;
             titleGroup.BringToFront();
             sound_track.PlayLooping();
-         
-            
-            //backgroundTrack.Hide();
 
+            pauseLabel.AutoSize = true;
+            pauseLabel.Text = "GAME PAUSED";
+            pauseLabel.ForeColor = Color.MediumVioletRed;
+            pauseLabel.Font = new Font("Comic Sans", 24, FontStyle.Bold);
+            pauseLabel.Top = this.Height / 2;
+            pauseLabel.Left = this.Width / 2;
+            pauseLabel.Visible = false;
+            this.Controls.Add(pauseLabel);
+
+            //backgroundTrack.Hide();
+            gameOver = true;
             gamePaused = true;
            // RestartGame();
         }
@@ -72,8 +84,13 @@ namespace ZombieShooter
             {
                 GameOverBanner.BringToFront();
                 GameOverBanner.Visible = true;
+
+                if (!muted)
+                {
+                    sound_track.PlayLooping();
+                }
+
                 
-                sound_track.PlayLooping();
                 gameOver = true;
                 player.Image = Properties.Resources.dead;
                 GameTimer.Stop();
@@ -88,14 +105,19 @@ namespace ZombieShooter
             //---- RANDOM GRENADE DROPS
             int rando = randNum.Next(counter, counter+200);
             counter++;
-            if(counter == rando && grenadeAvailable == false)
+            if(counter == rando && grenadeAvailable == false && !gamePaused)
             {
                 grenadeAvailable = true;
                 DropGrenade();
 
             }
 
-            
+            //---- FIRSTAID DROPS
+            if(playerHealth < 50 && firstAidAvailable == false && !gamePaused)
+            {
+                DropFirstAid();
+                firstAidAvailable = true;
+            }
            
 
             
@@ -138,7 +160,10 @@ namespace ZombieShooter
                         item.Dispose();
                         //((PictureBox)item).Dispose();
                         ammo += 5;
-                        reload_sound.Play();
+                        if (!muted)
+                        {
+                            reload_sound.Play();
+                        }
 
                     }
 
@@ -151,76 +176,108 @@ namespace ZombieShooter
                 {
                     if (player.Bounds.IntersectsWith(item.Bounds))
                     {
-                        explode_sound.Play();
+                        if (!muted)
+                        {
+                            explode_sound.Play();
+                        }
+                       
                         this.Controls.Remove(item);
                         item.Dispose();
-                        zombieSpeed = 0;
+                        
                         foreach (Zombie z in zombieList)
                         {
                             
                             z.Explode();
 
                         }
+                        grenadeTimer.Start();
                         grenadeAvailable = false;
-                        MakeZobie(4);
                         
-                        //        GameTimer.Stop();
-                        //        foreach (PictureBox z in zombieList)
-                        //        {
+                      
+                    }
 
-                        //            this.Controls.Remove((PictureBox)z);
-                        //            ((PictureBox)z).Dispose();
+                }
+                
+                //==========================================================]
+                //=========     FIRSTAID PICKUP    =========================]
+                //==========================================================]
+                if (item is PictureBox && (string)item.Tag == "FirstAid")
+                {
+                    if (player.Bounds.IntersectsWith(item.Bounds))
+                    {
+                        if (!muted)
+                        {
+                            cheer_sound.Play();
+                        }
+                        
+                        this.Controls.Remove(item);
+                        item.Dispose();
 
-
-                        //        }
-                        //        zombieList.Clear();
-                        //        for(int i =0; i<=3; i++)
-                        //        {
-                        //            MakeZobie();
-                        //        }
-
-                        //        GameTimer.Start();
-
+                        playerHealth += 20;
+                        
+                        firstAidAvailable = false;
+                        
+                      
                     }
 
                 }
 
-                    //==========================================================]
-                    //=========     ZOMBIE CHASE    ============================]
-                    //==========================================================]
-                    if (item is Zombie && (string)item.Tag == "zombie")
+                //==========================================================]
+                //=========     ZOMBIE CHASE    ============================]
+                //==========================================================]
+                if (item is Zombie && (string)item.Tag == "zombie")
                 {
 
                     if (player.Bounds.IntersectsWith(item.Bounds))
                     {
                         playerHealth -= 1;
-             
+                        if(facing == "left")
+                        {
+                            player.Image = Properties.Resources.leftDamaged;
+                        }
+                        else if(facing == "right")
+                        {
+                            player.Image = Properties.Resources.rightDamaged;
+                        }
+                        else if(facing == "down")
+                        {
+                            player.Image = Properties.Resources.downDamaged;
+                        }
+                        else if(facing == "up")
+                        {
+                            player.Image = Properties.Resources.upDamaged;
+                        }
+                        
+                        biteTimer.Start();
+
+
+
                     }
                     //----  ZOMBIE IS LOWER AND RIGHT OF PLAYER
                     if (item.Top > player.Top && item.Left > player.Left)
                     {
-                        
+
                         ((PictureBox)item).Image = Properties.Resources.zUpperLeft;
                     }
-                    
+
                     //----  ZOMBIE IS LOWER AND LEFT OF PLAYER
                     if (item.Top > player.Top && item.Left < player.Left)
                     {
-                        
+
                         ((PictureBox)item).Image = Properties.Resources.zUpperRight;
                     }
-                    
+
                     //----  ZOMBIE IS HIGHER AND LEFT OF PLAYER
                     if (item.Top < player.Top && item.Left < player.Left)
                     {
-                        
+
                         ((PictureBox)item).Image = Properties.Resources.zLowerRight;
                     }
-                    
+
                     //----  ZOMBIE IS HIGHER AND RIGHT OF PLAYER
                     if (item.Top < player.Top && item.Left > player.Left)
                     {
-                        
+
                         ((PictureBox)item).Image = Properties.Resources.zLowerLeft;
                     }
 
@@ -232,17 +289,17 @@ namespace ZombieShooter
 
                     if (item.Top < player.Top)
                     {
-                        item.Top += zombieSpeed;
+                        item.Top += ((Zombie)item).MoveSpeed;
                     }
 
                     if (item.Left > player.Left)
                     {
-                        item.Left -= zombieSpeed;
+                        item.Left -= ((Zombie)item).MoveSpeed;
                     }
 
                     if (item.Left < player.Left)
                     {
-                        item.Left += zombieSpeed;
+                        item.Left += ((Zombie)item).MoveSpeed;
                     }
 
 
@@ -332,23 +389,29 @@ namespace ZombieShooter
                         gamePaused = false;
                         GameTimer.Start();
                         sound_track.Stop();
+                        pauseLabel.Visible = false;
                     }
                     else
                     {
                         //PAUSE
                         gamePaused = true;
                         GameTimer.Stop();
-                        sound_track.PlayLooping();
+                        pauseLabel.Visible = true;
+                        if (!muted)
+                        {
+                            sound_track.PlayLooping();
+                        }
+                        
                     }
                     
                 }
 
 
             }
-          //  else
-          //  {
+            else
+            {
 
-                
+
 
                 //RESTART GAME
                 if (e.KeyCode == Keys.Return)
@@ -361,7 +424,7 @@ namespace ZombieShooter
                     
                     RestartGame();
                 }
-          //  }
+            }
 
         }//END OF KeyIsDown
 
@@ -414,7 +477,10 @@ namespace ZombieShooter
                 {
                     if (e.KeyCode == Keys.Space && ammo > 0)
                     {
-                        gun_fire.Play();
+                        if (!muted)
+                        {
+                            gun_fire.Play();
+                        }
                         ammo--;
                         ShootBullet(facing);
 
@@ -425,6 +491,13 @@ namespace ZombieShooter
                         }
 
                     }
+                    else if(e.KeyCode == Keys.Space && ammo == 0)
+                    {
+                        if (!muted)
+                        {
+                            dry_Fire.Play();
+                        }
+                    }
                    
                 }
             }
@@ -433,6 +506,54 @@ namespace ZombieShooter
 
         }//END OF KeyisUp
 
+        private void soundFX_Click(object sender, EventArgs e)
+        {
+            if (soundFX.Tag.ToString() == "On")
+            {
+                soundFX.Tag = "Off";
+                soundFX.Image = Properties.Resources.soundOff;
+                muted = true;
+                sound_track.Stop();
+            }
+            else
+            {
+                muted = false;
+                soundFX.Tag = "On";
+                soundFX.Image = Properties.Resources.soundOn;
+                sound_track.Play();
+            }
+        }
+
+ 
+
+        private void biteTimer_Tick(object sender, EventArgs e)
+        {
+
+            if (facing == "left")
+            {
+                player.Image = Properties.Resources.left;
+            }
+            else if (facing == "right")
+            {
+                player.Image = Properties.Resources.right;
+            }
+            else if (facing == "down")
+            {
+                player.Image = Properties.Resources.down;
+            }
+            else if (facing == "up")
+            {
+                player.Image = Properties.Resources.up;
+            }
+            bite_sound.Play();
+            biteTimer.Stop();
+        }
+
+        private void grenadeTimer_Tick(object sender, EventArgs e)
+        {
+            MakeZobie(4);
+            grenadeTimer.Stop();
+        }
 
         private void ShootBullet(string direction)
         {
@@ -448,8 +569,8 @@ namespace ZombieShooter
         {
             for (int i = 0; i < numOfZombiesToMake; i++)
             {
-                int posLeft = randNum.Next(0, game_width);
-                int posTop = randNum.Next(0, game_height);
+                int posLeft = randNum.Next(0, ActiveForm.Width);
+                int posTop = randNum.Next(0, ActiveForm.Height);
             
                 Zombie zombie = new Zombie(posLeft, posTop);
                 zombieList.Add(zombie);
@@ -458,13 +579,7 @@ namespace ZombieShooter
                 
             }
             player.BringToFront();
-            //PictureBox zombie = new PictureBox();
-            //zombie.Tag = "zombie";
-            //zombie.Image = Properties.Resources.zdown;
-            //zombie.Left = randNum.Next(0, 900);
-            //zombie.Top = randNum.Next(0, 800);
-            //zombie.SizeMode = PictureBoxSizeMode.AutoSize;
-
+   
         }
 
         private void DropAmmo()
@@ -496,10 +611,25 @@ namespace ZombieShooter
             player.BringToFront();
         }
 
+        private void DropFirstAid()
+        {
+            PictureBox firstAidDrop = new PictureBox();
+            firstAidDrop.Image = Properties.Resources.FirstAid;
+            firstAidDrop.SizeMode = PictureBoxSizeMode.AutoSize;
+            firstAidDrop.Left = randNum.Next(10, this.ClientSize.Width - firstAidDrop.Width);
+            firstAidDrop.Top = randNum.Next(40, ClientSize.Height - firstAidDrop.Height);
+            firstAidDrop.Tag = "FirstAid";
+            this.Controls.Add(firstAidDrop);
+
+            firstAidDrop.BringToFront();
+            player.BringToFront();
+        }
+
         private void RestartGame()
         {
 
             titleGroup.Hide();
+            pauseLabel.Visible = false;
 
             //--REMOVE ALL GAME ASSETS
             foreach (PictureBox pbox in ammoList)
@@ -536,7 +666,7 @@ namespace ZombieShooter
 
 
             //--MAKE NEW STARTING ZOMBIES
-           if(game_width > 900)
+           if(ActiveForm.Width > 900)
             {
                 MakeZobie(4);
             }
@@ -549,7 +679,6 @@ namespace ZombieShooter
             counter = 100;
             grenadeAvailable = false;
             player.Image = Properties.Resources.up;
-            zombieSpeed = 3;
             facing = "up";
             GameOverBanner.Visible = false;
             goDown = false;

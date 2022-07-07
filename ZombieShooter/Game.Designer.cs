@@ -39,12 +39,16 @@
             this.pressEnterLabel = new System.Windows.Forms.Label();
             this.arrowsToMove = new System.Windows.Forms.Label();
             this.spaceToShoot = new System.Windows.Forms.Label();
-            this.titlePic = new System.Windows.Forms.PictureBox();
             this.restartLabel = new System.Windows.Forms.Label();
+            this.biteTimer = new System.Windows.Forms.Timer(this.components);
+            this.titlePic = new System.Windows.Forms.PictureBox();
+            this.soundFX = new System.Windows.Forms.PictureBox();
             this.GameOverBanner = new System.Windows.Forms.PictureBox();
             this.player = new System.Windows.Forms.PictureBox();
+            this.grenadeTimer = new System.Windows.Forms.Timer(this.components);
             this.titleGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.titlePic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.soundFX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GameOverBanner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
@@ -120,7 +124,7 @@
             this.titleTextLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.titleTextLabel.AutoSize = true;
             this.titleTextLabel.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titleTextLabel.ForeColor = System.Drawing.Color.Maroon;
+            this.titleTextLabel.ForeColor = System.Drawing.Color.Firebrick;
             this.titleTextLabel.Location = new System.Drawing.Point(309, 33);
             this.titleTextLabel.Name = "titleTextLabel";
             this.titleTextLabel.Size = new System.Drawing.Size(695, 45);
@@ -163,17 +167,6 @@
             this.spaceToShoot.TabIndex = 20;
             this.spaceToShoot.Text = "Press SPACE to shoot";
             // 
-            // titlePic
-            // 
-            this.titlePic.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.titlePic.Image = global::ZombieShooter.Properties.Resources.title_card;
-            this.titlePic.Location = new System.Drawing.Point(146, 85);
-            this.titlePic.Name = "titlePic";
-            this.titlePic.Size = new System.Drawing.Size(1000, 562);
-            this.titlePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.titlePic.TabIndex = 17;
-            this.titlePic.TabStop = false;
-            // 
             // restartLabel
             // 
             this.restartLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -186,6 +179,35 @@
             this.restartLabel.TabIndex = 24;
             this.restartLabel.Text = "Press ENTER to restart!";
             this.restartLabel.Visible = false;
+            // 
+            // biteTimer
+            // 
+            this.biteTimer.Interval = 500;
+            this.biteTimer.Tick += new System.EventHandler(this.biteTimer_Tick);
+            // 
+            // titlePic
+            // 
+            this.titlePic.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.titlePic.Image = global::ZombieShooter.Properties.Resources.title_card;
+            this.titlePic.Location = new System.Drawing.Point(146, 85);
+            this.titlePic.Name = "titlePic";
+            this.titlePic.Size = new System.Drawing.Size(1000, 562);
+            this.titlePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.titlePic.TabIndex = 17;
+            this.titlePic.TabStop = false;
+            // 
+            // soundFX
+            // 
+            this.soundFX.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.soundFX.Image = global::ZombieShooter.Properties.Resources.soundOn;
+            this.soundFX.Location = new System.Drawing.Point(1414, 12);
+            this.soundFX.Name = "soundFX";
+            this.soundFX.Size = new System.Drawing.Size(48, 48);
+            this.soundFX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.soundFX.TabIndex = 28;
+            this.soundFX.TabStop = false;
+            this.soundFX.Tag = "On";
+            this.soundFX.Click += new System.EventHandler(this.soundFX_Click);
             // 
             // GameOverBanner
             // 
@@ -204,6 +226,7 @@
             // 
             this.player.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.player.BackColor = System.Drawing.Color.Transparent;
+            this.player.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.player.Image = global::ZombieShooter.Properties.Resources.up;
             this.player.Location = new System.Drawing.Point(702, 449);
             this.player.Name = "player";
@@ -212,14 +235,20 @@
             this.player.TabIndex = 4;
             this.player.TabStop = false;
             // 
+            // grenadeTimer
+            // 
+            this.grenadeTimer.Interval = 1500;
+            this.grenadeTimer.Tick += new System.EventHandler(this.grenadeTimer_Tick);
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1474, 824);
-            this.Controls.Add(this.restartLabel);
             this.Controls.Add(this.titleGroup);
+            this.Controls.Add(this.soundFX);
+            this.Controls.Add(this.restartLabel);
             this.Controls.Add(this.GameOverBanner);
             this.Controls.Add(this.player);
             this.Controls.Add(this.healthBar);
@@ -234,6 +263,7 @@
             this.titleGroup.ResumeLayout(false);
             this.titleGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.titlePic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.soundFX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GameOverBanner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
             this.ResumeLayout(false);
@@ -257,6 +287,9 @@
         private System.Windows.Forms.PictureBox titlePic;
         private System.Windows.Forms.Label restartLabel;
         private System.Windows.Forms.Label titleTextLabel;
+        private System.Windows.Forms.PictureBox soundFX;
+        private System.Windows.Forms.Timer biteTimer;
+        private System.Windows.Forms.Timer grenadeTimer;
     }
 }
 

@@ -51,9 +51,9 @@ namespace ZombieShooter
             {
                 zTimer.Stop();
                 this.MoveSpeed = 3;
-                zTimer.Dispose();
-                this.Dispose();
-                zTimer = null;
+                //zTimer.Dispose();
+                //this.Dispose();
+                //zTimer = null;
                 Game.ActiveForm.Controls.Remove(this);
                 
                 
